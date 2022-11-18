@@ -90,6 +90,9 @@ const Home = () => {
   ])
 
   const [sort, setSort] = useState({})
+  useEffect(() => {
+    fetchUser()
+  },[sort])
 
   const fetchUser = async() => {
     const result = await getAllUser(sort)
@@ -102,10 +105,10 @@ const Home = () => {
   }
 
   const handleChangeFormEmail = (e) => {
-    const { value, name } = e.target
+    const { value } = e.target
     setUserData(prevState => ({...prevState, email: value}))
   }
-  console.log('render')
+
   const handleSortChange = (e) => {
     const { value, name } = e.target
     let sortResult = {...sort}
@@ -115,7 +118,6 @@ const Home = () => {
       sortResult[name] = value
     }
     setSort(sortResult)
-    fetchUser()
   }
 
   const handleUpdate = async() => {
@@ -126,13 +128,6 @@ const Home = () => {
       fetchUser()
     }
   }
-
-  useEffect(() => {
-    console.log("321312")
-    fetchUser()
-  },[sort])
-
-  useEffect(() => {}, [data])
 
   return (
       <div className="container-fluid mt-5 pe-5 ps-5">

@@ -4,7 +4,6 @@ const baseUrl = "https://satu-platform-serice.herokuapp.com"
 
 export const getAllUser = async (sortResult) => {
   try {
-    console.log(sortResult)
     let url = `${baseUrl}/users`
 
     if (Object.keys(sortResult).length > 0) {
@@ -18,7 +17,6 @@ export const getAllUser = async (sortResult) => {
         urlParam += paramSymbol + `${key}=${sortResult[key]}`
       }
       url = url + urlParam
-      console.log(url)
     }
 
     const result = await axios.get(url)
