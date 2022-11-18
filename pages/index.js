@@ -135,6 +135,8 @@ const Home = () => {
     fetchUser()
   },[sort])
 
+  useEffect(() => {}, [data])
+
   return (
       <div className="container-fluid mt-5 pe-5 ps-5">
         <div className="row mb-3">
