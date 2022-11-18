@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import styles from '../styles/Home.module.css'
-import { Table } from './components'
+import Table from './components/table'
 import { getAllUser, updateUser } from '../helper'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
@@ -137,8 +136,7 @@ const Home = () => {
   },[sort])
 
   return (
-    <div className={styles.container}>
-      <div className="container-fluid mt-5">
+      <div className="container-fluid mt-5 pe-5 ps-5">
         <div className="row mb-3">
           <div className="col-md-1 px-0 me-3">
             <span style={{ fontSize: "14px" }}>Sort by name</span>
@@ -148,7 +146,7 @@ const Home = () => {
               <option value="DESC">(z - a)</option>
             </select>
           </div>
-          <div className="col-md-1 px-0 me-3">
+          <div className="col-md-1 me-3">
             <span style={{ fontSize: "14px" }}>Sort by gender</span>
             <select className="form-select form-select-sm" name="gender" onChange={(e) => handleSortChange(e)}>
               <option selected value="default">Default</option>
@@ -156,7 +154,7 @@ const Home = () => {
               <option value="DESC">(z - a)</option>
             </select>
           </div>
-          <div className="col-md-1 px-0 me-3">
+          <div className="col-md-1 me-3">
             <span style={{ fontSize: "14px" }}>Sort by most addresses</span>
             <select className="form-select form-select-sm" name="address" onChange={(e) => handleSortChange(e)}>
               <option selected value="default">Default</option>
@@ -172,9 +170,8 @@ const Home = () => {
             tableData={tableData}
           />
         </div>
-      </div>
 
-      {/* modal edit */}
+        {/* modal edit */}
       <div style={{ display: showModalEdit ? 'block' : 'none' }} className="modal">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -204,7 +201,7 @@ const Home = () => {
                     <Field
                       type="email"
                       name="email"
-                      className="form-control"
+                      className="form-control mb-3"
                       onChange={(e) => handleChangeFormEmail(e)}
                     />
                     <ErrorMessage name="email" component="div" className="text-danger" />
@@ -220,7 +217,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
   )
 }
 
