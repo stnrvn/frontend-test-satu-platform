@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { Table } from './components'
-import { getAllUser, updateUser } from './helper'
+import { getAllUser, updateUser } from '../helper'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 const Home = () => {
   const [data, setData] = useState([])
@@ -107,13 +108,7 @@ const Home = () => {
 
   const handleChangeFormEmail = (e) => {
     const { value, name } = e.target
-
-    if (!isValidEmail(value)) {
-      setEmailError('Email is invalid')
-    } else {
-      setEmailError(null)
-      setUserData(prevState => ({...prevState, email: value}))
-    }
+    setUserData(prevState => ({...prevState, email: value}))
   }
 
   const handleSortChange = (e) => {
@@ -188,26 +183,40 @@ const Home = () => {
               <button type="button" className="btn-close" onClick={() => setShowModalEdit(false)}></button>
             </div>
             <div className="modal-body">
-              <form>
-                <div className="mb-3">
-                  <label for="exampleInputEmail1" className="form-label">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    name="email"
-                    defaultValue={userData.email}
-                    onChange={(e) => handleChangeFormEmail(e)}
-                  />
-                  { emailError &&  <div id="emailHelp" className="form-text text-danger">{emailError}</div> }
-                </div>
-              </form>
+              <Formik
+                enableReinitialize
+                initialValues={userData}
+                validate={values => {
+                  const errors = {};
+                  if (!values.email) {
+                    errors.email = 'Required'
+                  } else if (
+                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                  ) {
+                    errors.email = 'Invalid email address'
+                  }
+                  return errors
+                }}
+                onSubmit={() => handleUpdate()}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
+                    <Field
+                      type="email"
+                      name="email"
+                      className="form-control"
+                      onChange={(e) => handleChangeFormEmail(e)}
+                    />
+                    <ErrorMessage name="email" component="div" className="text-danger" />
+                    <div className="modal-footer">
+                      <button type="button" className="btn btn-secondary" onClick={() => setShowModalEdit(false)}>Close</button>
+                      <button type="submit" className={`btn btn-success ${emailError && "disabled"}`} onClick={() => handleUpdate()} disabled={isSubmitting}>Save changes</button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
             </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={() => setShowModalEdit(false)}>Close</button>
-              <button type="button" className={`btn btn-success ${emailError && "disabled"}`} onClick={() => handleUpdate()}>Save changes</button>
-            </div>
+            
           </div>
         </div>
       </div>
