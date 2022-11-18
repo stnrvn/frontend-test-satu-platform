@@ -4,6 +4,7 @@ const baseUrl = "https://satu-platform-serice.herokuapp.com"
 
 export const getAllUser = async (sortResult) => {
   try {
+    console.log(sortResult)
     let url = `${baseUrl}/users`
 
     if (Object.keys(sortResult).length > 0) {

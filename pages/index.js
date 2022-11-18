@@ -101,15 +101,11 @@ const Home = () => {
     }
   }
 
-  const isValidEmail = (email) => {
-    return /\S+@\S+\.\S+/.test(email);
-  }
-
   const handleChangeFormEmail = (e) => {
     const { value, name } = e.target
     setUserData(prevState => ({...prevState, email: value}))
   }
-
+  console.log('render')
   const handleSortChange = (e) => {
     const { value, name } = e.target
     let sortResult = {...sort}
@@ -132,6 +128,7 @@ const Home = () => {
   }
 
   useEffect(() => {
+    console.log("321312")
     fetchUser()
   },[sort])
 
